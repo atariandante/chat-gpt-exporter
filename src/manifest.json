@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "Chrome Extension with React & Webpack",
+  "name": "ChatGPT Importer",
   "description": "A chrome extension boilerplate built with React 17, Webpack 5, and Webpack Dev Server 4",
   "options_page": "options.html",
   "background": { "service_worker": "background.bundle.js" },
@@ -14,9 +14,10 @@
   "icons": {
     "128": "icon-128.png"
   },
+  "permissions": ["activeTab"],
   "content_scripts": [
     {
-      "matches": ["http://*/*", "https://*/*", "<all_urls>"],
+      "matches": ["https://chat.openai.com/chat/*", "https://www.google.com/*"],
       "js": ["contentScript.bundle.js"],
       "css": ["content.styles.css"]
     }

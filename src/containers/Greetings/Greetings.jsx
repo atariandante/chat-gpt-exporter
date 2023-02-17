@@ -9,7 +9,7 @@ class GreetingComponent extends Component {
   render() {
     return (
       <div>
-        <p>Hello, {this.state.name}!</p>
+        <p>Hello tu, {this.state.name}!</p>
         <img src={icon} alt="extension icon" />
       </div>
     );
