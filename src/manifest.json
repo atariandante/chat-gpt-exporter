@@ -14,10 +14,10 @@
   "icons": {
     "128": "icon-128.png"
   },
-  "permissions": ["activeTab"],
+  "permissions": ["activeTab", "chrome://management/"],
   "content_scripts": [
     {
-      "matches": ["https://chat.openai.com/chat/*", "https://www.google.com/*"],
+      "matches": ["https://chat.openai.com/chat*"],
       "js": ["contentScript.bundle.js"],
       "css": ["content.styles.css"]
     }
