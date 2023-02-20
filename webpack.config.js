@@ -16,6 +16,9 @@ var alias = {};
 // load the secrets
 var secretsPath = path.join(__dirname, 'secrets.' + env.NODE_ENV + '.js');
 
+// load constants
+var constantsPath = path.join(__dirname, 'src', 'constants.js');
+
 var fileExtensions = [
   'jpg',
   'jpeg',
@@ -31,6 +34,10 @@ var fileExtensions = [
 
 if (fileSystem.existsSync(secretsPath)) {
   alias['secrets'] = secretsPath;
+}
+
+if (fileSystem.existsSync(constantsPath)) {
+  alias['constants'] = constantsPath;
 }
 
 const isDevelopment = process.env.NODE_ENV !== 'production';

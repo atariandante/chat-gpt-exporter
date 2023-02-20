@@ -8,13 +8,11 @@
     "default_popup": "popup.html",
     "default_icon": "icon-34.png"
   },
-  "chrome_url_overrides": {
-    "newtab": "newtab.html"
-  },
   "icons": {
     "128": "icon-128.png"
   },
-  "permissions": ["activeTab", "chrome://management/"],
+  "permissions": ["activeTab", "tabs", "storage"],
+  "host_permissions": ["*://*.notion.com/*"],
   "content_scripts": [
     {
       "matches": ["https://chat.openai.com/chat*"],
@@ -22,7 +20,6 @@
       "css": ["content.styles.css"]
     }
   ],
-  "devtools_page": "devtools.html",
   "web_accessible_resources": [
     {
       "resources": ["content.styles.css", "icon-128.png", "icon-34.png"],

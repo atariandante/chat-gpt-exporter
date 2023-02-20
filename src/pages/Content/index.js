@@ -41,7 +41,7 @@ document.addEventListener('mouseover', (event) => {
 
         root.unmount();
         container.remove();
-      }, 2000);
+      }, 0);
     });
   }
 });

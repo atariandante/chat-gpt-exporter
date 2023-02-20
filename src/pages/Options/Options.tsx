@@ -1,4 +1,10 @@
 import React from 'react';
+
+// @ts-ignore
+import secrets from 'secrets';
+
+import { Button, ChakraProvider } from '@chakra-ui/react';
+
 import './Options.css';
 
 interface Props {
@@ -6,7 +12,13 @@ interface Props {
 }
 
 const Options: React.FC<Props> = ({ title }: Props) => {
-  return <div className="OptionsContainer">{title} Page</div>;
+  return (
+    <ChakraProvider>
+      <Button onClick={() => window.open(secrets.notionAuthUrl)}>
+        Link Notion
+      </Button>
+    </ChakraProvider>
+  );
 };
 
 export default Options;

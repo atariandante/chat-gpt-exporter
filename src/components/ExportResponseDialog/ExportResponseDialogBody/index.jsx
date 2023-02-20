@@ -1,12 +1,17 @@
 import React from 'react';
 import { Button, Stack, Text } from '@chakra-ui/react';
 
+import WithContentDialogBody from './WithContentDialogBody';
 import useNotionAuth from '../../../hooks/useNotionAuth';
 
 const ExportResponseDialogBody = () => {
   const { isAuth } = useNotionAuth();
 
-  const handleClick = () => {};
+  const handleClick = () => {
+    chrome.runtime.sendMessage({
+      type: 'OPEN_EXTENSION_CONFIG',
+    });
+  };
 
   return (
     <div>
@@ -20,6 +25,8 @@ const ExportResponseDialogBody = () => {
           <Button onClick={handleClick}>Go to config</Button>
         </Stack>
       )}
+
+      {isAuth && <WithContentDialogBody />}
     </div>
   );
 };
