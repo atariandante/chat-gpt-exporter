@@ -40,6 +40,10 @@ if (fileSystem.existsSync(constantsPath)) {
   alias['constants'] = constantsPath;
 }
 
+if (fileSystem.existsSync(constantsPath)) {
+  alias['constants'] = constantsPath;
+}
+
 const isDevelopment = process.env.NODE_ENV !== 'production';
 
 var options = {

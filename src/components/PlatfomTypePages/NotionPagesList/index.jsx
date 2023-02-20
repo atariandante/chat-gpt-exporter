@@ -21,11 +21,14 @@ const NotionPagesList = () => {
       },
       (x) => {
         setPages(x);
-        console.log(x);
         setIsLoading(false);
       }
     );
   }, []);
+
+  console.log({
+    pages,
+  });
 
   if (isLoading) {
     return (
@@ -35,7 +38,7 @@ const NotionPagesList = () => {
     );
   }
 
-  if (!pages || pages.length) {
+  if (!pages || !pages.length) {
     return (
       <Text>
         You don't have any Notion pages yet. Please add one to your account.

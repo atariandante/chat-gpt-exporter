@@ -1,6 +1,8 @@
 import React from 'react';
 import { Button, Stack, Text } from '@chakra-ui/react';
 
+import { BACKGROUND_MESSAGE_TYPES } from 'constants';
+
 import WithContentDialogBody from './WithContentDialogBody';
 import useNotionAuth from '../../../hooks/useNotionAuth';
 
@@ -9,7 +11,7 @@ const ExportResponseDialogBody = () => {
 
   const handleClick = () => {
     chrome.runtime.sendMessage({
-      type: 'OPEN_EXTENSION_CONFIG',
+      type: BACKGROUND_MESSAGE_TYPES.OPEN_EXTENSION_CONFIG,
     });
   };
 

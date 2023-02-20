@@ -4,6 +4,8 @@ import { Client as NotionClient } from '@notionhq/client';
 
 import { BACKGROUND_MESSAGE_TYPES } from 'constants';
 
+import notionService from '../../api/services/notion';
+
 async function getNotionInstance() {
   const { notionAccessToken } = await chrome.storage.sync.get(
     'notionAccessToken'
@@ -19,25 +21,11 @@ async function getNotionInstance() {
 
   return { notion, notionAccessToken };
 }
-//a7257e18da5e43df97b262648ba4700b
-async function getNotionPageIds() {
-  try {
-    const { notion } = await getNotionInstance();
-
-    const response = await notion.search();
-
-    console.log({ response }, '----- response');
-
-    return response;
-  } catch (error) {
-    console.log({ error }, '----- error');
-  }
-}
 
 async function importToNotion({ content }) {
   const { notion } = await getNotionInstance();
 
-  const response = await getNotionPageIds();
+  const response = await notionService.search();
 
   console.log({
     response,
@@ -68,27 +56,12 @@ async function authenticateWithNotion(code) {
 
   console.log('Authenticating with notion...');
 
-  return fetch('https://api.notion.com/v1/oauth/token', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Basic ${btoa(
-        `${secrets.notionClientId}:${secrets.notionSecretId}`
-      )}`,
-    },
-    body: JSON.stringify({
-      grant_type: 'authorization_code',
-      code: String(code),
-      redirect_uri: 'https://chat.openai.com/chat/',
-    }),
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      if (data.access_token) {
-        console.log(`Saved notionAccessToken! ${data.access_token}`);
-        chrome.storage.sync.set({ notionAccessToken: data.access_token });
-      }
-    });
+  return notionService.exchangeCode(code).then(({ data }) => {
+    if (data.access_token) {
+      console.log(`Saved notionAccessToken! ${data.access_token}`);
+      chrome.storage.sync.set({ notionAccessToken: data.access_token });
+    }
+  });
 }
 
 function onMessage(message, sender, sendResponse) {
@@ -110,7 +83,8 @@ function onMessage(message, sender, sendResponse) {
         break;
       case BACKGROUND_MESSAGE_TYPES.GET_NOTION_PAGES:
         console.log('----- get notion pages -----');
-        getNotionPageIds().then((response) => {
+
+        notionService.search().then((response) => {
           sendResponse(response);
         });
         break;

@@ -1,31 +1,23 @@
+import secrets from '../../secrets.development';
+
 export default class Api {
-  constructor(config) {
-    this.config = config;
-    this.endpoint = `https://api.notion.com/v1/search`;
+  constructor() {
+    this.baseUrl = secrets.baseApiUrl;
   }
 
-  async search(query) {
+  async query({ headers, method = 'GET', body, pathname, ...rest }) {
     try {
-      const response = await fetch(this.endpoint, {
-        method: 'POST',
+      const response = await fetch(`${this.baseUrl}${pathname}`, {
+        method: method,
         headers: {
-          Authorization: `Bearer ${this.config.auth}`,
           'Content-Type': 'application/json',
-          'Notion-Version': '2022-06-28',
+          ...headers,
         },
-        body: query ? JSON.stringify(query) : null,
+        body: body ? JSON.stringify(body) : null,
+        ...rest,
       });
 
-      const data = await response.json();
-
-      console.log(
-        {
-          data,
-        },
-        '-----------data'
-      );
-
-      return data;
+      return await response.json();
     } catch (error) {
       console.error(`API CLASS SERVICE ERROR: ${error.message}`);
       console.error(`API CLASS SERVICE ERROR: ${error}`);
