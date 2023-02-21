@@ -6,6 +6,10 @@ export default class Api {
   }
 
   async query({ headers, method = 'GET', body, pathname, ...rest }) {
+    console.log({
+      body,
+    });
+
     try {
       const response = await fetch(`${this.baseUrl}${pathname}`, {
         method: method,

@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { Text, Divider, Heading, Stack } from '@chakra-ui/react';
+import { useAtom } from 'jotai';
 
 import PlatformButton from '../../../PlatformButton';
 import PlatformTypePages from '../../../PlatfomTypePages';
+import platformAtom from '../../../../atoms/platformAtom';
 
 const WithContentDialogBody = () => {
-  const [platform, setPlatform] = useState();
+  const [platform, setPlatform] = useAtom(platformAtom);
 
   const handleClickPlatform = (platform) => {
     setPlatform(platform.toLowerCase());

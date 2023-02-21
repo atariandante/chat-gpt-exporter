@@ -4,37 +4,22 @@ import {
   Button,
   MenuButton,
   MenuOptionGroup,
-  MenuItemOption,
-  MenuDivider,
   MenuItem,
   MenuList,
 } from '@chakra-ui/react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowUpRightFromSquare } from '@fortawesome/free-solid-svg-icons';
 
-const LinkedNotionSpaceCard = ({ title, emoji, url, ...props }) => {
+const LinkedNotionSpaceCard = (props) => {
   return (
     <Menu>
       <MenuButton as={Button}>
-        {emoji} {title}
+        {props.emoji} {props.title}
       </MenuButton>
 
       <MenuList>
         <MenuOptionGroup title="Notion">
-          <MenuItem
-            icon={<FontAwesomeIcon icon={faArrowUpRightFromSquare} />}
-            onClick={() => window.open(url)}
-          >
-            See in notion
+          <MenuItem onClick={() => props.onClick('export', props)}>
+            🚀 Export
           </MenuItem>
-        </MenuOptionGroup>
-
-        <MenuDivider />
-
-        <MenuOptionGroup title="Google drive" k>
-          <MenuItemOption> Email</MenuItemOption>
-          <MenuItemOption> Phone</MenuItemOption>
-          <MenuItemOption> Country</MenuItemOption>
         </MenuOptionGroup>
       </MenuList>
     </Menu>

@@ -17,9 +17,38 @@ class NotionService extends Api {
       method: 'GET',
     });
 
-    console.log(query.data);
-
     return query.data;
+  }
+
+  async export(params) {
+    const { content, pageId } = params;
+
+    const query = this.query({
+      pathname: '/notion/export',
+      method: 'POST',
+      body: {
+        content,
+        pageId,
+      },
+    });
+
+    console.log({
+      query,
+    });
+
+    return query;
+  }
+
+  async checkAuth(params) {
+    const { notionAccessToken } = params;
+
+    return await this.query({
+      pathname: '/notion/check-auth',
+      method: 'POST',
+      body: {
+        token: notionAccessToken,
+      },
+    });
   }
 }
 

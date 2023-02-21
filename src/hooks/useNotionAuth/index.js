@@ -4,44 +4,37 @@ import { BACKGROUND_MESSAGE_TYPES } from 'constants';
 
 const useNotion = () => {
   const [isAuth, setIsAuth] = useState(false);
-  const [notionPages, setNotionPages] = useState([]);
-  const notionClient = {};
-
-  const exportTo = (content, platform = 'notion') => {
-    if (!content) {
-      throw new Error('No content to export');
-    }
-
-    switch (platform) {
-      default:
-        chrome.runtime.sendMessage(
-          {
-            type: BACKGROUND_MESSAGE_TYPES.IMPORT_TO_NOTION,
-            params: {
-              content,
-            },
-          },
-          (x) => {
-            console.log(x);
-          }
-        );
-    }
-  };
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    if (!chrome.storage) return;
-    chrome.storage.sync
-      .get('notionAccessToken')
-      .then(({ notionAccessToken }) => {
-        setIsAuth(Boolean(notionAccessToken));
-      });
-  }, [chrome.storage]);
+    if (!chrome.runtime) return;
+
+    setIsLoading(true);
+
+    chrome.storage.sync.get('notionAccessToken', ({ notionAccessToken }) => {
+      if (notionAccessToken) {
+        chrome.runtime.sendMessage(
+          {
+            type: BACKGROUND_MESSAGE_TYPES.CHECK_NOTION_AUTH,
+            params: {
+              notionAccessToken,
+            },
+          },
+          (response) => {
+            setIsAuth(response.data.isAuth);
+            setIsLoading(false);
+          }
+        );
+      } else {
+        setIsAuth(false);
+        setIsLoading(false);
+      }
+    });
+  }, []);
 
   return {
     isAuth,
-    notionClient,
-    exportTo,
-    notionPages,
+    isLoading,
   };
 };
 

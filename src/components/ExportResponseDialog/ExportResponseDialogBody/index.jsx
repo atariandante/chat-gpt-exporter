@@ -1,5 +1,11 @@
 import React from 'react';
-import { Button, Stack, Text } from '@chakra-ui/react';
+import {
+  Button,
+  CircularProgress,
+  Spinner,
+  Stack,
+  Text,
+} from '@chakra-ui/react';
 
 import { BACKGROUND_MESSAGE_TYPES } from 'constants';
 
@@ -7,13 +13,21 @@ import WithContentDialogBody from './WithContentDialogBody';
 import useNotionAuth from '../../../hooks/useNotionAuth';
 
 const ExportResponseDialogBody = () => {
-  const { isAuth } = useNotionAuth();
+  const { isAuth, isLoading } = useNotionAuth();
 
   const handleClick = () => {
     chrome.runtime.sendMessage({
       type: BACKGROUND_MESSAGE_TYPES.OPEN_EXTENSION_CONFIG,
     });
   };
+
+  if (isLoading) {
+    return (
+      <Stack spacing={2} align="center" justify="center" minHeight="100px">
+        <Spinner size="md" />
+      </Stack>
+    );
+  }
 
   return (
     <div>

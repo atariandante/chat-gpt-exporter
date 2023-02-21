@@ -88,6 +88,34 @@ function onMessage(message, sender, sendResponse) {
           sendResponse(response);
         });
         break;
+
+      case BACKGROUND_MESSAGE_TYPES.EXPORT_NOTION_PAGE:
+        notionService.export(params).then((response) => {
+          console.log('----- export notion page response -----', response);
+          sendResponse(response);
+        });
+
+        break;
+
+      case BACKGROUND_MESSAGE_TYPES.CHECK_NOTION_AUTH:
+        notionService
+          .checkAuth(params)
+          .then((response) => {
+            console.log('----- export notion page response -----', response);
+            sendResponse(response);
+          })
+          .catch((error) => {
+            console.log(
+              {
+                error,
+              },
+              '---extension'
+            );
+            sendResponse(error);
+          });
+
+        break;
+
       default:
         break;
     }
