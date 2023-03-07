@@ -9,7 +9,7 @@ import {
 } from '@chakra-ui/react';
 import { BACKGROUND_MESSAGE_TYPES } from 'constants';
 
-import { extractCurrentChatGPTChatContent } from '../../utils/dom';
+import { extractChatGPTAnswer } from '../../utils/dom';
 
 const LinkedNotionSpaceCard = (props) => {
   const [isLoading, setIsLoading] = useBoolean();
@@ -19,7 +19,7 @@ const LinkedNotionSpaceCard = (props) => {
   const handleExportToNotion = (payload) => {
     setIsLoading.on();
 
-    const content = extractCurrentChatGPTChatContent();
+    const content = extractChatGPTAnswer();
 
     chrome.runtime.sendMessage(
       {
