@@ -43,6 +43,14 @@ function getType(nodeName) {
       return 'paragraph';
     case 'A':
       return 'link';
+
+    case 'STRONG':
+    case 'B':
+      return 'bold';
+
+    case 'CODE':
+      return 'code';
+
     default:
       return 'other';
   }
@@ -83,6 +91,13 @@ function parseNodeContent(node) {
         };
 
         content.push(boldShape);
+      } else if (childNode.nodeName === 'CODE') {
+        const codeShape = {
+          type: 'code',
+          content: childNode.textContent,
+        };
+
+        content.push(codeShape);
       } else {
         const childContent = parseNodeContent(childNode);
 
