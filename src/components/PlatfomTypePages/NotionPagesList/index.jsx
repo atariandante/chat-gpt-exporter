@@ -3,7 +3,6 @@ import { Text, Spinner, Stack } from '@chakra-ui/react';
 
 import { BACKGROUND_MESSAGE_TYPES } from 'constants';
 
-import { extractCurrentChatGPTChatContent } from '../../../utils/dom';
 import LinkedNotionSpaceCard from '../../LinkedNotionSpaceCard';
 
 const DEFAULT_TITLE = {
@@ -14,20 +13,6 @@ const DEFAULT_TITLE = {
 const NotionPagesList = () => {
   const [pages, setPages] = useState();
   const [isLoading, setIsLoading] = useState(true);
-
-  const handleClickSpaceButton = (type, payload) => {
-    const content = extractCurrentChatGPTChatContent();
-
-    if (type === 'export') {
-      chrome.runtime.sendMessage({
-        type: BACKGROUND_MESSAGE_TYPES.EXPORT_NOTION_PAGE,
-        params: {
-          content,
-          pageId: payload.id,
-        },
-      });
-    }
-  };
 
   useEffect(() => {
     chrome.runtime.sendMessage(
@@ -49,6 +34,7 @@ const NotionPagesList = () => {
     );
   }
 
+  // TODO: ADD ERROR
   if (!pages || !pages.length) {
     return (
       <Text>
@@ -69,7 +55,6 @@ const NotionPagesList = () => {
             emoji={icon?.emoji}
             title={firstTitle.plain_text}
             url={url}
-            onClick={handleClickSpaceButton}
           />
         );
       })}

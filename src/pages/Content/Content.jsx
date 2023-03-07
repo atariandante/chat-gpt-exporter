@@ -10,7 +10,7 @@ const Content = () => {
 
   return (
     <ChakraProvider>
-      <Tooltip label="Export ChatGPT response" placement="bottom">
+      <Tooltip label="Export ChatGPT Answer" placement="bottom">
         <IconButton
           mt={2}
           onClick={() => setIsOpen(true)}

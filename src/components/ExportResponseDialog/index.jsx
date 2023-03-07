@@ -12,10 +12,16 @@ import ExportResponseDialogBody from './ExportResponseDialogBody';
 
 const ExportResponseDialog = ({ onClose, isOpen, ...props }) => {
   return (
-    <Modal isOpen={isOpen} onClose={onClose} id="injected-dialog" {...props}>
+    <Modal
+      isOpen={isOpen}
+      onClose={onClose}
+      closeOnOverlayClick={false}
+      id="injected-dialog"
+      {...props}
+    >
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader>Export ChatGPT response</ModalHeader>
+        <ModalHeader>Export ChatGPT Answer</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
           <ExportResponseDialogBody />

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Text, Divider, Heading, Stack } from '@chakra-ui/react';
 import { useAtom } from 'jotai';
 
@@ -7,10 +7,10 @@ import PlatformTypePages from '../../../PlatfomTypePages';
 import platformAtom from '../../../../atoms/platformAtom';
 
 const WithContentDialogBody = () => {
-  const [platform, setPlatform] = useAtom(platformAtom);
+  const [selectedPlatform, setSelectedPlatform] = useAtom(platformAtom);
 
   const handleClickPlatform = (platform) => {
-    setPlatform(platform.toLowerCase());
+    setSelectedPlatform(platform.toLowerCase());
   };
 
   return (
@@ -23,8 +23,9 @@ const WithContentDialogBody = () => {
         {['Notion', 'Google Docs', 'Google Sheets'].map((platform) => (
           <PlatformButton
             key={platform}
-            unlock={platform !== 'Notion'}
+            locked={platform !== 'Notion'}
             onClick={() => handleClickPlatform(platform)}
+            active={platform.toLowerCase() === selectedPlatform}
           >
             {platform}
           </PlatformButton>
@@ -37,13 +38,13 @@ const WithContentDialogBody = () => {
         Allowed pages 📑
       </Heading>
 
-      {platform && (
+      {selectedPlatform && (
         <Stack direction="row" spacing={2} as="ul">
-          <PlatformTypePages platform={platform} />
+          <PlatformTypePages platform={selectedPlatform} />
         </Stack>
       )}
 
-      {!platform && (
+      {!selectedPlatform && (
         <Text>
           You need to select a <b>platform</b> to see the pages you can export
           to. 🤭
