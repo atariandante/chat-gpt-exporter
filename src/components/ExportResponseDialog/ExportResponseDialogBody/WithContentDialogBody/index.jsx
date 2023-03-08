@@ -32,7 +32,7 @@ const WithContentDialogBody = () => {
         ))}
       </Stack>
 
-      <Divider mx={-4} />
+      <Divider mx="-24px" />
 
       <Heading as="h3" size="md">
         Allowed pages 📑

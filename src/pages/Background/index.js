@@ -90,10 +90,15 @@ function onMessage(message, sender, sendResponse) {
         break;
 
       case BACKGROUND_MESSAGE_TYPES.EXPORT_NOTION_PAGE:
-        notionService.export(params).then((response) => {
-          console.log('----- export notion page response -----', response);
-          sendResponse(response);
-        });
+        notionService
+          .export(params)
+          .then((response) => {
+            console.log('----- export notion page response -----', response);
+            sendResponse({ success: true });
+          })
+          .catch((error) => {
+            sendResponse(error);
+          });
 
         break;
 

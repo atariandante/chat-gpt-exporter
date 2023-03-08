@@ -1,5 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { Text, Spinner, Stack } from '@chakra-ui/react';
+import {
+  Text,
+  Spinner,
+  Stack,
+  Button,
+  IconButton,
+  Tooltip,
+} from '@chakra-ui/react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
 import { BACKGROUND_MESSAGE_TYPES } from 'constants';
 
@@ -13,6 +22,12 @@ const DEFAULT_TITLE = {
 const NotionPagesList = () => {
   const [pages, setPages] = useState();
   const [isLoading, setIsLoading] = useState(true);
+
+  const handleAddNotionPage = () => {
+    chrome.runtime.sendMessage({
+      type: BACKGROUND_MESSAGE_TYPES.OPEN_EXTENSION_CONFIG,
+    });
+  };
 
   useEffect(() => {
     chrome.runtime.sendMessage(
@@ -44,7 +59,7 @@ const NotionPagesList = () => {
   }
 
   return (
-    <Stack direction="column" spacing={4}>
+    <Stack direction="row" spacing={2}>
       {pages.map(({ id, url, icon, properties, title }) => {
         const [firstTitle] = title ??
           properties.title?.title ?? [DEFAULT_TITLE];
@@ -58,6 +73,12 @@ const NotionPagesList = () => {
           />
         );
       })}
+
+      <Tooltip label="Authorize another from your notion">
+        <IconButton onClick={() => handleAddNotionPage()}>
+          <FontAwesomeIcon icon={faPlus} />
+        </IconButton>
+      </Tooltip>
     </Stack>
   );
 };

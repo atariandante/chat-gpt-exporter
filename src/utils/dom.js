@@ -48,6 +48,15 @@ function getType(nodeName) {
     case 'B':
       return 'bold';
 
+    case 'UL':
+      return 'ul';
+
+    case 'OL':
+      return 'ol';
+
+    case 'LI':
+      return 'li';
+
     case 'CODE':
       return 'code';
 
@@ -98,6 +107,24 @@ function parseNodeContent(node) {
         };
 
         content.push(codeShape);
+      } else if (childNode.nodeName === 'UL' || childNode.nodeName === 'OL') {
+        const listContent = parseNodeContent(childNode);
+
+        const listShape = {
+          type: childNode.nodeName === 'UL' ? 'ul' : 'ol',
+          content: listContent,
+        };
+
+        content.push(listShape);
+      } else if (childNode.nodeName === 'LI') {
+        const listItemContent = parseNodeContent(childNode);
+
+        const listItemShape = {
+          type: 'li',
+          content: listItemContent,
+        };
+
+        content.push(listItemShape);
       } else {
         const childContent = parseNodeContent(childNode);
 

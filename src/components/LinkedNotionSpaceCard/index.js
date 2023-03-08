@@ -10,9 +10,11 @@ import {
 import { BACKGROUND_MESSAGE_TYPES } from 'constants';
 
 import { extractChatGPTAnswer } from '../../utils/dom';
+import { useSnackbar } from 'notistack';
 
 const LinkedNotionSpaceCard = (props) => {
   const [isLoading, setIsLoading] = useBoolean();
+  const { enqueueSnackbar } = useSnackbar();
 
   const { emoji, title, id } = props;
 
@@ -29,7 +31,13 @@ const LinkedNotionSpaceCard = (props) => {
           pageId: payload.id,
         },
       },
-      () => {
+      ({ success }) => {
+        if (!success) {
+          enqueueSnackbar('Something went wrong', { variant: 'error' });
+          return;
+        }
+
+        enqueueSnackbar('All good!', { variant: 'success' });
         setIsLoading.off();
       }
     );
