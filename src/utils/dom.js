@@ -86,7 +86,8 @@ function parseNodeContent(node) {
       if (childNode.nodeName === 'A') {
         const linkShape = {
           type: 'link',
-          content: childNode.href,
+          content: childNode.textContent,
+          link: childNode.href,
         };
 
         content.push(linkShape);
