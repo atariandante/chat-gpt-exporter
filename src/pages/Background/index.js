@@ -27,10 +27,6 @@ async function importToNotion({ content }) {
 
   const response = await notionService.search();
 
-  console.log({
-    response,
-  });
-
   const [pageId] = response.results.map((result) => result.id);
 
   notion.blocks.children

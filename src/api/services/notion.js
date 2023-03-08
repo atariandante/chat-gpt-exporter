@@ -32,10 +32,6 @@ class NotionService extends Api {
       },
     });
 
-    console.log({
-      query,
-    });
-
     return query;
   }
 

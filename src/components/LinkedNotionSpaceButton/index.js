@@ -12,7 +12,7 @@ import { BACKGROUND_MESSAGE_TYPES } from 'constants';
 import { extractChatGPTAnswer } from '../../utils/dom';
 import { useSnackbar } from 'notistack';
 
-const LinkedNotionSpaceCard = (props) => {
+const LinkedNotionSpaceButton = (props) => {
   const [isLoading, setIsLoading] = useBoolean();
   const { enqueueSnackbar } = useSnackbar();
 
@@ -45,7 +45,7 @@ const LinkedNotionSpaceCard = (props) => {
 
   return (
     <Menu>
-      <MenuButton as={Button} isLoading={isLoading}>
+      <MenuButton as={Button} isLoading={isLoading} {...props}>
         {emoji} {title}
       </MenuButton>
 
@@ -53,7 +53,6 @@ const LinkedNotionSpaceCard = (props) => {
         <MenuItem
           disabled={isLoading}
           onClick={() => handleExportToNotion({ id })}
-          {...props}
         >
           🚀 Export
         </MenuItem>
@@ -62,4 +61,4 @@ const LinkedNotionSpaceCard = (props) => {
   );
 };
 
-export default LinkedNotionSpaceCard;
+export default LinkedNotionSpaceButton;

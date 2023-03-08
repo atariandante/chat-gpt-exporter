@@ -19,6 +19,8 @@ const WithContentDialogBody = () => {
         Plaform to export 📦
       </Heading>
 
+      <Text>Select the platform you want to export your response to.</Text>
+
       <Stack direction="row" spacing={2} as="ul">
         {['Notion', 'Google Docs', 'Google Sheets'].map((platform) => (
           <PlatformButton
@@ -26,6 +28,7 @@ const WithContentDialogBody = () => {
             locked={platform !== 'Notion'}
             onClick={() => handleClickPlatform(platform)}
             active={platform.toLowerCase() === selectedPlatform}
+            size="sm"
           >
             {platform}
           </PlatformButton>

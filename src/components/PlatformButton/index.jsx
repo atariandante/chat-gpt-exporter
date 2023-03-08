@@ -6,7 +6,7 @@ import { faCircleCheck } from '@fortawesome/free-solid-svg-icons';
 const PlatformButton = ({ children, disabled, locked, active, ...props }) => {
   if (locked) {
     return (
-      <Tooltip label="Locked platform 🔒">
+      <Tooltip label="Coming soon 🔒">
         <Button size="lg" isDisabled {...props}>
           {children}
         </Button>

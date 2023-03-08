@@ -1,18 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import {
-  Text,
-  Spinner,
-  Stack,
-  Button,
-  IconButton,
-  Tooltip,
-} from '@chakra-ui/react';
+import { Text, Spinner, Stack, IconButton, Tooltip } from '@chakra-ui/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
 import { BACKGROUND_MESSAGE_TYPES } from 'constants';
 
-import LinkedNotionSpaceCard from '../../LinkedNotionSpaceCard';
+import LinkedNotionSpaceButton from '../../LinkedNotionSpaceButton';
 
 const DEFAULT_TITLE = {
   id: new Date(),
@@ -65,17 +58,18 @@ const NotionPagesList = () => {
           properties.title?.title ?? [DEFAULT_TITLE];
 
         return (
-          <LinkedNotionSpaceCard
+          <LinkedNotionSpaceButton
             id={id}
             emoji={icon?.emoji}
             title={firstTitle.plain_text}
             url={url}
+            size="sm"
           />
         );
       })}
 
       <Tooltip label="Authorize another from your notion">
-        <IconButton onClick={() => handleAddNotionPage()}>
+        <IconButton onClick={() => handleAddNotionPage()} size="sm">
           <FontAwesomeIcon icon={faPlus} />
         </IconButton>
       </Tooltip>
